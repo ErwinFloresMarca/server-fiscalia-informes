@@ -24,6 +24,18 @@ export class User extends Entity {
   ci: string;
 
   @property({
+    type: 'boolean',
+    default: true,
+  })
+  state?: boolean;
+
+  @property({
+    type: 'date',
+    defaultFn: 'now',
+  })
+  created?: Date;
+
+  @property({
     type: 'string',
     required: true,
   })

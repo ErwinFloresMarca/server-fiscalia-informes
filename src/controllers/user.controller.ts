@@ -137,7 +137,11 @@ export class UserController {
     },
   })
   async find(@param.filter(User) filter?: Filter<User>): Promise<User[]> {
-    return this.userRepository.find(filter);
+    const users = await this.userRepository.find(filter);
+    return users.map(user => {
+      delete user.password;
+      return user;
+    });
   }
 
   @patch('/users')

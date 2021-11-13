@@ -60,12 +60,14 @@ export class UserController {
     })
     user: Omit<User, 'id'>,
   ): Promise<User> {
-    user.permissions = [
-      PermissionKey.CreateUser,
-      PermissionKey.DeleteUser,
-      PermissionKey.UpdateUser,
-      PermissionKey.ViewUser,
-    ];
+    if (!user.permissions) {
+      user.permissions = [
+        PermissionKey.CreateUser,
+        PermissionKey.DeleteUser,
+        PermissionKey.UpdateUser,
+        PermissionKey.ViewUser,
+      ];
+    }
     return this.userRepository.create(user);
   }
 
@@ -144,6 +146,34 @@ export class UserController {
     });
   }
 
+  @get('/users/permissions')
+  @response(200, {
+    description: 'Array of Permissions',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: String,
+        },
+      },
+    },
+  })
+  @authenticate({
+    strategy: 'jwt',
+    options: {
+      required: [PermissionKey.ViewUser],
+    },
+  })
+  async getPermissions(): Promise<PermissionKey[]> {
+    const permissions = [
+      PermissionKey.CreateUser,
+      PermissionKey.UpdateUser,
+      PermissionKey.DeleteUser,
+      PermissionKey.ViewUser,
+    ];
+    return permissions;
+  }
+
   @patch('/users')
   @response(200, {
     description: 'User PATCH success count',
@@ -189,6 +219,30 @@ export class UserController {
     @param.filter(User, {exclude: 'where'}) filter?: FilterExcludingWhere<User>,
   ): Promise<User> {
     return this.userRepository.findById(id, filter);
+  }
+
+  @patch('/users/my-account')
+  @response(204, {
+    description: 'User PATCH success',
+  })
+  @authenticate({
+    strategy: 'jwt',
+    options: {
+      required: [],
+    },
+  })
+  async updateMyUser(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(User, {partial: true}),
+        },
+      },
+    })
+    user: User,
+  ): Promise<void> {
+    const authUser: AuthUser = await this.getCurrentUser();
+    await this.userRepository.updateById(authUser.id, user);
   }
 
   @patch('/users/{id}')

@@ -9,4 +9,9 @@ export const enum PermissionKey {
   ViewUser = 'ViewUser',
   // For deleting a user
   DeleteUser = 'DeleteUser',
+
+  ViewInFoto = 'ViewInFoto',
+  CreateInFoto = 'CreateInFoto',
+  UpdateInFoto = 'UpdateInFoto',
+  DeleteInFoto = 'DeleteInFoto',
 }

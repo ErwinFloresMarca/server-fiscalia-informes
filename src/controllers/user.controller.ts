@@ -66,6 +66,10 @@ export class UserController {
         PermissionKey.DeleteUser,
         PermissionKey.UpdateUser,
         PermissionKey.ViewUser,
+        PermissionKey.ViewInFoto,
+        PermissionKey.CreateInFoto,
+        PermissionKey.UpdateInFoto,
+        PermissionKey.DeleteInFoto,
       ];
     }
     return this.userRepository.create(user);
@@ -170,6 +174,10 @@ export class UserController {
       PermissionKey.UpdateUser,
       PermissionKey.DeleteUser,
       PermissionKey.ViewUser,
+      PermissionKey.ViewInFoto,
+      PermissionKey.CreateInFoto,
+      PermissionKey.UpdateInFoto,
+      PermissionKey.DeleteInFoto,
     ];
     return permissions;
   }
@@ -283,12 +291,17 @@ export class UserController {
     @param.path.string('id') id: string,
     @requestBody() user: User,
   ): Promise<void> {
-    user.permissions = [
-      PermissionKey.CreateUser,
-      PermissionKey.DeleteUser,
-      PermissionKey.UpdateUser,
-      PermissionKey.ViewUser,
-    ];
+    if (!user.permissions)
+      user.permissions = [
+        PermissionKey.CreateUser,
+        PermissionKey.DeleteUser,
+        PermissionKey.UpdateUser,
+        PermissionKey.ViewUser,
+        PermissionKey.ViewInFoto,
+        PermissionKey.CreateInFoto,
+        PermissionKey.UpdateInFoto,
+        PermissionKey.DeleteInFoto,
+      ];
     await this.userRepository.replaceById(id, user);
   }
 

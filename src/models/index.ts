@@ -2,3 +2,8 @@ export * from './foto.model';
 export * from './grupo.model';
 export * from './informe-fotografico.model';
 export * from './user.model';
+export * from './casos.model';
+export * from './fiscales.model';
+export * from './dispositivos.model';
+export * from './propietarios.model';
+export * from './tipo-dispositivos.model';

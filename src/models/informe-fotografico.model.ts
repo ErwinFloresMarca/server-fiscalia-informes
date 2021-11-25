@@ -5,7 +5,9 @@ import {
   model,
   property,
 } from '@loopback/repository';
-import {GrupoWithRelations} from '.';
+import {DispositivosWithRelations, GrupoWithRelations} from '.';
+import {Casos, CasosWithRelations} from './casos.model';
+import {Dispositivos} from './dispositivos.model';
 import {Grupo} from './grupo.model';
 import {User, UserWithRelations} from './user.model';
 
@@ -17,54 +19,6 @@ export class InformeFotografico extends Entity {
     generated: true,
   })
   id?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  cud: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  propietarioDispositivo: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  victima: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  denunciado: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  marcaDispositivo: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  nombreDispositivo: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  imeiDispositivo: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  snDispositivo: string;
 
   @property({
     type: 'array',
@@ -103,11 +57,23 @@ export class InformeFotografico extends Entity {
   })
   urlFotoFTP: string;
 
+  @property({
+    type: 'date',
+    defaultFn: 'now',
+  })
+  created?: Date;
+
   @belongsTo(() => User)
   userId: string;
 
   @hasMany(() => Grupo)
   grupos: Grupo[];
+
+  @belongsTo(() => Casos)
+  casoId: string;
+
+  @belongsTo(() => Dispositivos)
+  dispositivoId: string;
 
   constructor(data?: Partial<InformeFotografico>) {
     super(data);
@@ -118,6 +84,8 @@ export interface InformeFotograficoRelations {
   // describe navigational properties here
   user?: UserWithRelations;
   grupos?: GrupoWithRelations[];
+  caso?: CasosWithRelations[];
+  dispositivo?: DispositivosWithRelations;
 }
 
 export type InformeFotograficoWithRelations = InformeFotografico &

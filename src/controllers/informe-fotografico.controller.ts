@@ -24,7 +24,7 @@ import {
   MyAuthBindings,
   PermissionKey,
 } from '../authorization';
-import {InformeFotografico, User} from '../models';
+import {Casos, Dispositivos, InformeFotografico, User} from '../models';
 import {InformeFotograficoRepository} from '../repositories';
 
 export class InformeFotograficoController {
@@ -107,6 +107,54 @@ export class InformeFotograficoController {
     @param.filter(InformeFotografico) filter?: Filter<InformeFotografico>,
   ): Promise<InformeFotografico[]> {
     return this.informeFotograficoRepository.find(filter);
+  }
+
+  @get('/informe-fotograficos/{id}/dispositivos', {
+    responses: {
+      '200': {
+        description: 'Dispositivos belonging to InformeFotografico',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(Dispositivos)},
+          },
+        },
+      },
+    },
+  })
+  @authenticate({
+    strategy: 'jwt',
+    options: {
+      required: [PermissionKey.ViewInFoto],
+    },
+  })
+  async getDispositivos(
+    @param.path.string('id') id: typeof InformeFotografico.prototype.id,
+  ): Promise<Dispositivos> {
+    return this.informeFotograficoRepository.dispositivo(id);
+  }
+
+  @get('/informe-fotograficos/{id}/casos', {
+    responses: {
+      '200': {
+        description: 'Casos belonging to InformeFotografico',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(Casos)},
+          },
+        },
+      },
+    },
+  })
+  @authenticate({
+    strategy: 'jwt',
+    options: {
+      required: [PermissionKey.ViewInFoto],
+    },
+  })
+  async getCasos(
+    @param.path.string('id') id: typeof InformeFotografico.prototype.id,
+  ): Promise<Casos> {
+    return this.informeFotograficoRepository.caso(id);
   }
 
   @get('/informe-fotograficos/{id}')

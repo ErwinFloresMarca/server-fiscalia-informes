@@ -33,6 +33,12 @@ export class Foto extends Entity {
   })
   fotoHeight: number;
 
+  @property({
+    type: 'date',
+    defaultFn: 'now',
+  })
+  created?: Date;
+
   @belongsTo(() => Grupo)
   grupoId: string;
 

@@ -34,6 +34,12 @@ export class Fiscales extends Entity {
   ci: string;
 
   @property({
+    type: 'string',
+    required: true,
+  })
+  cargo?: string;
+
+  @property({
     type: 'date',
     defaultFn: 'now',
   })

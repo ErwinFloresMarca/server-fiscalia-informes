@@ -23,7 +23,7 @@ export class InformeFotografico extends Entity {
   @property({
     type: 'array',
     itemType: 'string',
-    required: true,
+    default: [],
   })
   ordenGrupos: string[];
 
@@ -38,6 +38,12 @@ export class InformeFotografico extends Entity {
     required: true,
   })
   encabezado: string;
+
+  @property({
+    type: 'boolean',
+    default: false,
+  })
+  terminado: boolean;
 
   @property({
     type: 'number',
@@ -55,7 +61,7 @@ export class InformeFotografico extends Entity {
     type: 'string',
     required: true,
   })
-  urlFotoFTP: string;
+  urlFotosFTP: string;
 
   @property({
     type: 'date',

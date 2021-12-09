@@ -46,16 +46,16 @@ export class InformeFotografico extends Entity {
   terminado: boolean;
 
   @property({
-    type: 'number',
-    default: 9,
+    type: 'string',
+    default: '30%',
   })
-  fotoWidth?: number;
+  fotoWidth?: string;
 
   @property({
-    type: 'number',
-    default: 12,
+    type: 'string',
+    default: '300px',
   })
-  fotoHeight?: number;
+  fotoHeight?: string;
 
   @property({
     type: 'string',

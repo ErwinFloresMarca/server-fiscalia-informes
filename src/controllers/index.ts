@@ -15,3 +15,4 @@ export * from './tipo-dispositivo.controller';
 export * from './tipo-dispositivos-dispositivos.controller';
 export * from './user-informe-fotografico.controller';
 export * from './user.controller';
+export * from './foto.controller';

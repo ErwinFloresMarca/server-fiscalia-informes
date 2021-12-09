@@ -22,10 +22,17 @@ export class User extends Entity {
 
   @property({
     type: 'string',
-    unique: 'string',
+    index: {
+      unique: true,
+    },
     required: true,
   })
   ci: string;
+
+  @property({
+    type: 'string',
+  })
+  avatar: string;
 
   @property({
     type: 'boolean',

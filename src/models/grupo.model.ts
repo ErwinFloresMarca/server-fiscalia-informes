@@ -32,16 +32,14 @@ export class Grupo extends Entity {
   ordenFotos?: string[];
 
   @property({
-    type: 'number',
-    required: true,
+    type: 'string',
   })
-  fotoWidth: number;
+  fotoWidth: string;
 
   @property({
-    type: 'number',
-    required: true,
+    type: 'string',
   })
-  fotoHeight: number;
+  fotoHeight: string;
 
   @property({
     type: 'date',

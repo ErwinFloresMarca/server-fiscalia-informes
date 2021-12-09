@@ -64,7 +64,8 @@ export class FileDownloadController {
    */
   private validateFileName(fileName: string) {
     const resolved = path.resolve(this.storageDirectory, fileName);
-    if (resolved.startsWith(this.storageDirectory)) return resolved;
+    if (resolved.startsWith(path.resolve(this.storageDirectory, '')))
+      return resolved;
     // The resolved file is outside sandbox
     throw new HttpErrors.BadRequest(`Invalid file name: ${fileName}`);
   }

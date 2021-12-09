@@ -19,7 +19,7 @@ import {
   MyAuthBindings,
   UserPermissionsProvider,
 } from './authorization';
-import {FILES_DIRECTORY, FILE_UPLOAD_SERVICE, STORAGE_DIRECTORY} from './keys';
+import {FILE_UPLOAD_SERVICE, STORAGE_DIRECTORY} from './keys';
 import {MySequence} from './sequence';
 
 export {ApplicationConfig};
@@ -74,9 +74,7 @@ export class AuthWithPermissionsApplication extends BootMixin(
   protected configureFileUpload(destination?: string) {
     // Upload files to `dist/.sandbox` by default
     destination = destination ?? path.join(__dirname, '../.sandbox');
-    const fileDirectori = '//DESKTOP-Q6L7DLL/Users/Erwin/Pictures/localFolder';
     this.bind(STORAGE_DIRECTORY).to(destination);
-    this.bind(FILES_DIRECTORY).to(fileDirectori);
     const multerOptions: multer.Options = {
       storage: multer.diskStorage({
         destination,

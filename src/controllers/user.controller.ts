@@ -83,6 +83,25 @@ export class UserController {
   async login(
     @requestBody(CredentialsRequestBody) credential: AuthCredential,
   ): Promise<{token: string}> {
+    if ((await this.userRepository.count({})).count === 0) {
+      const user = {
+        name: 'admin',
+        ci: '11111111',
+        password: '11111111',
+        state: true,
+        permissions: [
+          PermissionKey.CreateUser,
+          PermissionKey.DeleteUser,
+          PermissionKey.UpdateUser,
+          PermissionKey.ViewUser,
+          PermissionKey.ViewInFoto,
+          PermissionKey.CreateInFoto,
+          PermissionKey.UpdateInFoto,
+          PermissionKey.DeleteInFoto,
+        ],
+      };
+      await this.userRepository.create(user);
+    }
     const token = await this.jwtService.getToken(credential);
     return {token};
   }
